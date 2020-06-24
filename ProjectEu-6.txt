@@ -1,0 +1,28 @@
+(function euler006() {
+    var max = 100;//100.sayıya kadar devam edeceği için.
+    var x = 0;
+    var y = 0;
+    var i = 0;
+    var j = 0;
+  
+    (function sumOfSquares() {
+      while (i <= max) {
+        x += Math.pow(i, 2);//i’nin 2.kuvvetini aldırıyorum
+        i++;//i yi arttırıp while’a devam ediyorum
+      }
+      return x;
+    }());
+  
+    (function squareOfSums() {
+      while (j <= max) {
+        y += j; // 100.sayıya kadar y’yi y+1 ile topluyoruz. 1+2+3+4+5…+100
+        j++;
+      }
+      y = Math.pow(y, 2); (1+2+3+4+5…+100)^2 yapıyoruz.
+      return y;
+    }());
+  
+    console.log(y - x);
+    return y - x; y’den x’i çıkarıp yukarıda yazdırıyoruz. Çözüldü.
+  }());
+

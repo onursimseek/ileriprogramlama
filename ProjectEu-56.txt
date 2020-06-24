@@ -1,0 +1,63 @@
+function bigMultiply(bigNumber,mul){
+	var length = bigNumber.length;
+	var carry = [];
+	while(carry.length<length){carry[carry.length]=0;}
+	for(var j = 0; j < length; j++){
+		var temp = mul*bigNumber[j];
+		if(temp > 9){ //carry
+			bigNumber[j] = temp%10;
+			carry[j+1] = temp/10|0;
+			if(j==length-1){
+				length++;
+				bigNumber[j+1]=0;
+			}
+		}else{
+			bigNumber[j] = temp;
+			carry[j+1] = 0;
+		}
+	}
+	for(var j = 0; j < length; j++){
+		if(carry[j]){
+			var temp = bigNumber[j] + carry[j];
+
+			if(temp > 9){ //carry again
+				// Dizileri genişletmeye gerek olup olmadığını kontrol edin
+				if(j==length-1){
+					length++;
+					bigNumber[j+1]=0;
+					carry[j+1]=0;
+				}
+				bigNumber[j] = temp%10;
+				carry[j+1]  += temp/10|0;
+			}else{
+				bigNumber[j] = temp;
+			}
+		}	}
+	return bigNumber;
+}
+// Bu büyük ölçüde optimize edilebilir, ancak şimdilik yeterince iyi olabilir
+function bigPow(base,exp){
+	var bigNumber = [1];
+	while(exp){
+		bigMultiply(bigNumber,base);
+		exp--;
+	}
+	return bigNumber;
+}
+function sumDigits(bigNumber){
+	sum = 0;
+	for(var i = 0; i < bigNumber.length; i++){
+		sum += bigNumber[i];
+}
+	return sum;
+}
+var maxSum = 0;
+for(var base = 0; base <= 100; base++){
+	for(var exp = 0; exp <= 100; exp++){
+		var sum = sumDigits(bigPow(base,exp))
+		if(sum > maxSum){
+			maxSum = sum;
+		}
+	}
+}
+console.log(maxSum);
